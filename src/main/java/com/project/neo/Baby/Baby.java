@@ -1,4 +1,4 @@
-package Baby;
+package com.project.neo.Baby;
 import java.util.HashMap;
 
 //needs function to take data from excel sheet continuously
@@ -9,7 +9,16 @@ public class Baby {
     private HashMap< String, String> prickTimestamp = new HashMap<String,String>();
     private HashMap< String, String> sweatTimestamp = new HashMap<String,String>();
 
+    public Baby (String ID) {
+        this.ID = ID;
+    }
+    public String getID() {
+        return ID;
+    }
 
+    public void setID(String ID) {
+        this.ID = ID;
+    }
 
 
 
