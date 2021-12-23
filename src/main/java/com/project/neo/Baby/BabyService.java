@@ -25,4 +25,13 @@ public class BabyService {
         babyrepository.save(baby);
         System.out.println("baby saved");
     }
+
+    public void deleteBaby(int id) {
+        boolean exists = babyrepository.existsById(id);
+        if (!exists) {
+            throw new IllegalStateException("Baby with Id: " + id + " does not exist.");
+        }
+        babyrepository.deleteById(id);
+        System.out.println("Baby Id: " + id + " has been deleted.");
+    }
 }
