@@ -27,4 +27,9 @@ public class BabyController {
         serviceOne.addNewBaby(baby);
     }
 
+    @DeleteMapping(path = "/{id}")
+    public void deleteBaby(@PathVariable("id") int id) {
+        serviceOne.deleteBaby(id);
+    }
+
 }
