@@ -11,11 +11,11 @@ import java.util.List;
 @Configuration
 public class BabyConfig {
 
-    @Bean
+    @Bean //ensures that this runs
     CommandLineRunner commandLineRunner(Babyrepository repository) {
         return args -> {
-            Baby baby1 = new Baby("124790");
-            Baby baby2 = new Baby("247619");
+            Baby baby1 = new Baby(124790);
+            Baby baby2 = new Baby(247619);
             repository.saveAll(List.of(baby1, baby2));
         };
     }

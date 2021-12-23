@@ -20,4 +20,9 @@ public class BabyService {
         return babyrepository.findAll(); //this is where service layer interacts with data layer
     }
 
+    public void addNewBaby(Baby baby) {
+        System.out.println(baby);
+        babyrepository.save(baby);
+        System.out.println("baby saved");
+    }
 }

@@ -2,9 +2,7 @@ package com.project.neo.Baby;
 
 import com.project.neo.BabyRepository.Babyrepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,5 +22,9 @@ public class BabyController {
         return serviceOne.returnBaby();
     }
 
+    @PostMapping(path = "/addbaby")
+    public void addNewBaby(@RequestBody Baby baby) { //from the request body of the client map it to a baby
+        serviceOne.addNewBaby(baby);
+    }
 
 }
