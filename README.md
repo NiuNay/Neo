@@ -9,6 +9,7 @@ In order to run the applicaton, first download MongoDB Community Service at http
 Once downloaded, create a database with the name "HospitalRecords", with Collection Name "Babies"
 
 In your IDE, run the "NeoApplication" class. This sets up the local server and connects the HospitalRecords Database in MongoDB to the application.
+The application will automatically create 2 baby objects when launched.
 
 
 
