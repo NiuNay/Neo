@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface Babyrepository extends MongoRepository<Baby, Integer> {
 
+    Baby findBabyByID(int ID);
+
 }

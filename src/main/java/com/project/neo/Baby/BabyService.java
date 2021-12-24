@@ -4,6 +4,8 @@ import com.project.neo.BabyRepository.Babyrepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.time.Instant;
 import java.util.List;
 
 //This class contains the business functions
@@ -34,4 +36,35 @@ public class BabyService {
         babyrepository.deleteById(id);
         System.out.println("Baby Id: " + id + " has been deleted.");
     }
+
+    public void add_NoteTimeStamp(Instant time_instant, String note, int id) {
+        boolean exists = babyrepository.existsById(id);
+        if (!exists) {
+            throw new IllegalStateException("Baby with ID: " + id + "does not exist.");
+        }
+
+        ((babyrepository.findBabyByID(id)).getNoteTimestamp()).put(time_instant, note); // returns hashmap of returned baby object
+
+    }
+
+    public void add_PrickTimeStamp(Instant time_instant, BigDecimal prick_data, int id) {
+        boolean exists = babyrepository.existsById(id);
+        if (!exists) {
+            throw new IllegalStateException("Baby with ID: " + id + "does not exist.");
+        }
+
+        ((babyrepository.findBabyByID(id)).getPrickTimestamp()).put(time_instant, prick_data); // returns hashmap of returned baby object
+
+    }
+
+    public void add_SweatTimeStamp(Instant time_instant, BigDecimal sweat_data, int id) {
+        boolean exists = babyrepository.existsById(id);
+        if (!exists) {
+            throw new IllegalStateException("Baby with ID: " + id + "does not exist.");
+        }
+
+        ((babyrepository.findBabyByID(id)).getSweatTimestamp()).put(time_instant, sweat_data); // returns hashmap of returned baby object
+
+    }
+
 }
