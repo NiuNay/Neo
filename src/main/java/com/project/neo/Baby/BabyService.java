@@ -2,9 +2,6 @@ package com.project.neo.Baby;
 
 import com.project.neo.BabyRepository.Babyrepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,8 +11,6 @@ import java.util.Optional;
 @Service
 public class BabyService {
     private final Babyrepository babyrepository;
-    private Query query;
-    private Update update;
 
     @Autowired
     public BabyService(Babyrepository babyrepository) {
@@ -51,7 +46,6 @@ public class BabyService {
         Optional<Baby> opt = babyrepository.getBabyById(id);
 
         if(opt.isPresent()) {
-            System.out.println(opt.get()); // before hashmap update
             opt.get().getNoteTimestamp().put(time_instant, note);
             babyrepository.save(opt.get());
         }
@@ -71,7 +65,6 @@ public class BabyService {
         Optional<Baby> opt = babyrepository.getBabyById(id);
 
         if(opt.isPresent()) {
-            System.out.println(opt.get()); // before hashmap update
             opt.get().getPrickTimestamp().put(time_instant, prick_data);
             babyrepository.save(opt.get());
         }
@@ -90,7 +83,6 @@ public class BabyService {
         Optional<Baby> opt = babyrepository.getBabyById(id);
 
         if(opt.isPresent()) {
-            System.out.println(opt.get()); // before hashmap update
             opt.get().getSweatTimestamp().put(time_instant, sweat_data);
             babyrepository.save(opt.get());
         }

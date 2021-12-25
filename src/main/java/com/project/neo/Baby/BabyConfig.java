@@ -40,6 +40,7 @@ public class BabyConfig {
             service.add_NoteTimeStamp("2:03PM", "HI", id);
             service.add_PrickTimeStamp("2:03PM", "HI", id);
             service.add_SweatTimeStamp("2:03PM", "HI", id);
+            service.add_SweatTimeStamp("5:03PM", "TEST2", id);
         };
     }
 

@@ -19,4 +19,19 @@ public class UserService {
     public List<User> returnUser() {
         return user_repository.findAll();
     }
+
+    public void addNewUser(User user) {
+        System.out.println(user);
+        user_repository.save(user);
+        System.out.println("user saved");
+    }
+
+    public void deleteUser(Integer id) {
+        boolean exists = user_repository.existsById(id);
+        if (!exists) {
+            throw new IllegalStateException("Baby with Id: " + id + " does not exist.");
+        }
+        user_repository.deleteById(id);
+        System.out.println("Baby Id: " + id + " has been deleted.");
+    }
 }
