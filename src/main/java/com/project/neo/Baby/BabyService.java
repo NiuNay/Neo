@@ -56,7 +56,7 @@ public class BabyService {
 
     }
 
-    public void add_PrickTimeStamp(String time_instant, String prick_data, int id) {
+    public void add_PrickTimeStamp(String time_instant, double prick_data, int id) {
         boolean exists = babyrepository.existsById(id);
         if (!exists) {
             throw new IllegalStateException("Baby with ID: " + id + "does not exist.");

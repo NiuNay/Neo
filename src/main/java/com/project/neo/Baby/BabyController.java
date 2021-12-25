@@ -1,5 +1,6 @@
 package com.project.neo.Baby;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.project.neo.BabyRepository.Babyrepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -23,15 +24,31 @@ public class BabyController {
         return service.returnBaby();
     }
 
-    @PostMapping(path = "/addbaby")
+    @PostMapping(path = "/addbaby") //adds baby
     public void addNewBaby(@RequestBody Baby baby) { //from the request body of the client map it to a baby
         service.addNewBaby(baby);
         System.out.println("Baby added.");
     }
 
-    @DeleteMapping(path = "/{id}")
+    @DeleteMapping(path = "/{id}") //deletes baby by id
     public void deleteBaby(@PathVariable("id") int id) {
         service.deleteBaby(id);
+    }
+
+    //the request body of the post method maps to only one object - objectnode.
+    //time instant and note are then extracted separately.
+    @PostMapping(path = "/{id}/addNote")
+    public void addNewNote(@RequestBody ObjectNode objectNode, @PathVariable("id") int id) {
+        String time_instant = objectNode.get("time_instant").asText();
+        String note = objectNode.get("note").asText();
+        service.add_NoteTimeStamp(time_instant, note, id);
+    }
+
+    @PostMapping(path = "/{id}/addPrickdata")
+    public void addNewPrick(@RequestBody ObjectNode objectNode, @PathVariable("id") int id) {
+        String time_instant = objectNode.get("time_instant").asText();
+        double prick_data = objectNode.get("prick_data").asDouble();
+        service.add_PrickTimeStamp(time_instant, prick_data, id);
     }
 
 

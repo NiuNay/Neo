@@ -16,7 +16,7 @@ import java.util.HashMap;
 public class Baby {
     @Id @Getter @Setter private Integer id;
     @Getter @Setter private HashMap< String, String> noteTimestamp = new HashMap<>();
-    @Getter private HashMap< String, String> prickTimestamp = new HashMap<>();
+    @Getter private HashMap< String, Double> prickTimestamp = new HashMap<>();
     @Getter private HashMap< String, String> sweatTimestamp = new HashMap<>();
 
     public Baby(Integer ID) {
