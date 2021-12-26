@@ -4,6 +4,8 @@ import com.project.neo.BabyRepository.Babyrepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Array;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -92,4 +94,13 @@ public class BabyService {
         }
     }
 
+    public Optional<Baby> returnSingleBaby(int id) {
+        boolean exists = babyrepository.existsById(id);
+        if (!exists) {
+            throw new IllegalStateException("Baby with ID: " + id + "does not exist.");
+        }
+
+        Optional<Baby> opt = babyrepository.getBabyById(id);
+        return opt;
+    }
 }

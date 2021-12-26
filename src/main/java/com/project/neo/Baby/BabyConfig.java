@@ -12,7 +12,7 @@ import java.util.List;
 @Configuration
 public class BabyConfig {
 
-    @Bean //ensures that this runs
+    @Bean //ensures that this runs during runtime
     CommandLineRunner commandLineRunner(Babyrepository repository) {
         return args -> {
             BabyService service = new BabyService(repository);
@@ -25,22 +25,22 @@ public class BabyConfig {
             Baby baby2 = new Baby(int2);
             Baby baby3 = new Baby(int3);
 
-            HashMap<String, String> note = new HashMap<>();
+            //HashMap<String, String> note = new HashMap<>();
 
-            note.put("2:03PM", "hello there.");
+            //note.put("2:03PM", "hello there.");
 
-            baby3.setNoteTimestamp(note);
+            //baby3.setNoteTimestamp(note);
 
-            repository.saveAll(List.of(baby1, baby2));
+            repository.saveAll(List.of(baby1, baby2, baby3));
 
-            service.addNewBaby(baby3);
+            //service.addNewBaby(baby3);
 
-            Integer id = 124790;
+            //Integer id = 124790;
 
-            service.add_NoteTimeStamp("2:03PM", "HI", id);
-            service.add_PrickTimeStamp("2:03PM", 2.5, id);
-            service.add_SweatTimeStamp("2:03PM", "HI", id);
-            service.add_SweatTimeStamp("5:03PM", "TEST2", id);
+            //service.add_NoteTimeStamp("2:03PM", "HI", id);
+            //service.add_PrickTimeStamp("2:03PM", 2.5, id);
+            //service.add_SweatTimeStamp("2:03PM", "HI", id);
+            //service.add_SweatTimeStamp("5:03PM", "TEST2", id);
         };
     }
 

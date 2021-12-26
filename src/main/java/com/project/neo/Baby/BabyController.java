@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 //this class contains all resources for api layer - what will be returned on the server
 @CrossOrigin(origins = "http://localhost:3000")
@@ -20,9 +21,10 @@ public class BabyController {
     }
 
     @GetMapping //makes this a restful end point by default so this is what is returned to the server
-    public List<Baby> returnBabyID() {
+    public List<Baby> returnBaby() {
         return service.returnBaby();
     }
+
 
     @PostMapping(path = "/addbaby") //adds baby
     public void addNewBaby(@RequestBody Baby baby) { //from the request body of the client map it to a baby
@@ -30,7 +32,13 @@ public class BabyController {
         System.out.println("Baby added.");
     }
 
-    @DeleteMapping(path = "/{id}") //deletes baby by id
+    @GetMapping(path = "/{id}") //makes this a restful end point by default so this is what is returned to the server
+    public Optional<Baby> returnSingleBaby(@PathVariable("id") int id) {
+
+        return service.returnSingleBaby(id);
+    }
+
+    @DeleteMapping(path = "/{id}/delete") //deletes baby by id
     public void deleteBaby(@PathVariable("id") int id) {
         service.deleteBaby(id);
     }

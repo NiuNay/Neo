@@ -15,6 +15,8 @@ import java.util.HashMap;
 @NoArgsConstructor
 public class Baby {
     @Id @Getter @Setter private Integer id;
+    @Getter @Setter private double cali_grad;
+    @Getter @Setter private double cali_intercept;
     @Getter @Setter private HashMap< String, String> noteTimestamp = new HashMap<>();
     @Getter private HashMap< String, Double> prickTimestamp = new HashMap<>();
     @Getter private HashMap< String, String> sweatTimestamp = new HashMap<>();
