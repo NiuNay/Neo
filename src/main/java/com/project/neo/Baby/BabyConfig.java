@@ -25,6 +25,7 @@ public class BabyConfig {
             Baby baby2 = new Baby(int2);
             Baby baby3 = new Baby(int3);
 
+
             //HashMap<String, String> note = new HashMap<>();
 
             //note.put("2:03PM", "hello there.");
@@ -32,6 +33,7 @@ public class BabyConfig {
             //baby3.setNoteTimestamp(note);
 
             repository.saveAll(List.of(baby1, baby2, baby3));
+            //System.out.print("Bean 1 Run");
 
             //service.addNewBaby(baby3);
 

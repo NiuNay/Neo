@@ -7,6 +7,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 //needs function to take data from excel sheet continuously
 //set and get methods
@@ -15,11 +16,11 @@ import java.util.HashMap;
 @NoArgsConstructor
 public class Baby {
     @Id @Getter @Setter private Integer id;
-    @Getter @Setter private double cali_grad;
-    @Getter @Setter private double cali_intercept;
-    @Getter @Setter private HashMap< String, String> noteTimestamp = new HashMap<>();
-    @Getter private HashMap< String, Double> prickTimestamp = new HashMap<>();
-    @Getter private HashMap< String, String> sweatTimestamp = new HashMap<>();
+    @Getter @Setter private double cali_grad = 1.1;
+    @Getter @Setter private double cali_intercept = 0.2;
+    @Getter @Setter private LinkedHashMap< String, String> noteTimestamp = new LinkedHashMap<>();
+    @Getter private LinkedHashMap< String, Double> prickTimestamp = new LinkedHashMap<>();
+    @Getter private LinkedHashMap< String, Double> sweatTimestamp = new LinkedHashMap<>();
 
     public Baby(Integer ID) {
         this.id = ID;
@@ -31,4 +32,10 @@ public class Baby {
         this.prickTimestamp = baby.getPrickTimestamp();
         this.sweatTimestamp = baby.getSweatTimestamp();
     }
+
+    public Integer getId() {
+        return id;
+    }
+
+
 }

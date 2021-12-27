@@ -20,10 +20,11 @@ public class BabyController {
         this.service = service;
     }
 
-    @GetMapping //makes this a restful end point by default so this is what is returned to the server
+    @GetMapping //makes this a restful end point by default so this is what is returned to the server. Returns full list of all babies in db
     public List<Baby> returnBaby() {
         return service.returnBaby();
     }
+
 
 
     @PostMapping(path = "/addbaby") //adds baby
@@ -32,7 +33,7 @@ public class BabyController {
         System.out.println("Baby added.");
     }
 
-    @GetMapping(path = "/{id}") //makes this a restful end point by default so this is what is returned to the server
+    @GetMapping(path = "/{id}") //returns only the specified baby
     public Optional<Baby> returnSingleBaby(@PathVariable("id") int id) {
 
         return service.returnSingleBaby(id);

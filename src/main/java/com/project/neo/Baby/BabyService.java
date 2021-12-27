@@ -4,6 +4,9 @@ import com.project.neo.BabyRepository.Babyrepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
@@ -76,7 +79,8 @@ public class BabyService {
         }
     }
 
-    public void add_SweatTimeStamp(String time_instant, String sweat_data, int id) {
+    //must calibrate before you
+    public void add_SweatTimeStamp(String time_instant, Double sweat_data, int id) {
         boolean exists = babyrepository.existsById(id);
         if (!exists) {
             throw new IllegalStateException("Baby with ID: " + id + "does not exist.");
@@ -85,7 +89,7 @@ public class BabyService {
         Optional<Baby> opt = babyrepository.getBabyById(id);
 
         if(opt.isPresent()) {
-            opt.get().getSweatTimestamp().put(time_instant, sweat_data);
+            opt.get().getSweatTimestamp().put(time_instant, (sweat_data-opt.get().getCali_intercept())/opt.get().getCali_grad());
             babyrepository.save(opt.get());
         }
 
@@ -100,7 +104,43 @@ public class BabyService {
             throw new IllegalStateException("Baby with ID: " + id + "does not exist.");
         }
 
+        UpdateSweatLevels(id); //This will update sweat values found in the csv
         Optional<Baby> opt = babyrepository.getBabyById(id);
+
         return opt;
+    }
+
+    //takes the id of the selected baby and retrieves sweat info from the database
+    public void UpdateSweatLevels (int i) {
+        String file = "C:\\Users\\65978\\OneDrive - Imperial College London\\Desktop\\"+ i + ".csv"; // -< This is the path where the csv is saved.
+        BufferedReader reader1 = null;
+        String line = "";
+
+        System.out.println(file);
+        try {
+            reader1 = new BufferedReader(new FileReader(file));
+            System.out.println("In here");
+            int j = 1;
+            while ((line = reader1.readLine()) != null) {
+
+                if (j != 1) {
+
+                    String[] row = line.split(","); //element 1 is first column, element 2 is second column
+                    add_SweatTimeStamp(row[0], Double.parseDouble(row[1]), i);
+
+                }
+
+                j = j + 1;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                reader1.close();
+            } catch (IOException e) {
+
+                e.printStackTrace();
+            }
+        }
     }
 }
