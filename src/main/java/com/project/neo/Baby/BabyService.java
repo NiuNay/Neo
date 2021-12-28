@@ -143,4 +143,42 @@ public class BabyService {
             }
         }
     }
+
+    public void addCalibration(double gradient, double intercept, int id) {
+        boolean exists = babyrepository.existsById(id);
+        if (!exists) {
+            throw new IllegalStateException("Baby with ID: " + id + "does not exist.");
+        }
+
+        Optional<Baby> opt = babyrepository.getBabyById(id);
+
+        if(opt.isPresent()) {
+            opt.get().setCali_grad(gradient);
+            opt.get().setCali_intercept(intercept);
+            babyrepository.save(opt.get());
+        }
+
+        else {
+            System.out.println("NOT FOUND");
+        }
+
+    }
+
+    public void addDelay(double delay, String start_date, String end_date, int id) {
+        boolean exists = babyrepository.existsById(id);
+        if (!exists) {
+            throw new IllegalStateException("Baby with ID: " + id + "does not exist.");
+        }
+
+        Optional<Baby> opt = babyrepository.getBabyById(id);
+
+        if(opt.isPresent()) {
+            opt.get().setDelay(delay);
+            babyrepository.save(opt.get());
+        }
+
+        else {
+            System.out.println("NOT FOUND");
+        }
+    }
 }

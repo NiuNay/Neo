@@ -18,6 +18,7 @@ public class Baby {
     @Id @Getter @Setter private Integer id;
     @Getter @Setter private double cali_grad = 1.1;
     @Getter @Setter private double cali_intercept = 0.2;
+    @Getter @Setter private double delay = 20; //in minutes
     @Getter @Setter private LinkedHashMap< String, String> noteTimestamp = new LinkedHashMap<>();
     @Getter private LinkedHashMap< String, Double> prickTimestamp = new LinkedHashMap<>();
     @Getter private LinkedHashMap< String, Double> sweatTimestamp = new LinkedHashMap<>();

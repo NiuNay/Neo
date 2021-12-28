@@ -60,5 +60,20 @@ public class BabyController {
         service.add_PrickTimeStamp(time_instant, prick_data, id);
     }
 
+    @PostMapping(path = "/{id}/addDelay")
+    public void addDelay(@RequestBody ObjectNode objectNode, @PathVariable("id") int id) {
+        double delay = objectNode.get("delay").asDouble();
+        String start_date = objectNode.get("start_date").asText();
+        String end_date = objectNode.get("end_date").asText();
+        service.addDelay(delay, start_date, end_date, id);
+    }
+
+    @PostMapping(path = "/{id}/addCalibration")
+    public void addCalibration(@RequestBody ObjectNode objectNode, @PathVariable("id") int id) {
+        double gradient = objectNode.get("gradient").asDouble();
+        double intercept = objectNode.get("intercept").asDouble();
+        service.addCalibration(gradient, intercept, id);
+    }
+
 
 }
