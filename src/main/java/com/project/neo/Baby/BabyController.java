@@ -28,7 +28,7 @@ public class BabyController {
 
 
 
-    @PostMapping(path = "/addbaby") //adds baby
+    @PostMapping(path = "/addBaby") //adds baby
     public void addNewBaby(@RequestBody Baby baby) { //from the request body of the client map it to a baby
         service.addNewBaby(baby);
         System.out.println("Baby added.");
@@ -55,7 +55,7 @@ public class BabyController {
         service.add_NoteTimeStamp(time_instant, note, id);
     }
 
-    @PostMapping(path = "/{id}/addPrickdata")
+    @PostMapping(path = "/{id}/addPrickData")
     public void addNewPrick(@RequestBody ObjectNode objectNode, @PathVariable("id") int id) {
         String time_instant = objectNode.get("time_instant").asText();
         double prick_data = objectNode.get("prick_data").asDouble();
