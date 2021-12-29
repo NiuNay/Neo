@@ -138,8 +138,8 @@ public class BabyService {
 
     //takes the id of the selected baby and retrieves sweat info from the database
     public void UpdateSweatLevels (int i) {
-        //String file = "C:\\Users\\65978\\OneDrive - Imperial College London\\Desktop\\"+ i + ".csv"; // -< This is the path where the csv is saved.
-        String file = "C:\\Users\\65978\\OneDrive - Imperial College London\\Desktop\\test3.csv";
+        String file = "C:\\Users\\65978\\OneDrive - Imperial College London\\Desktop\\"+ i + ".csv"; // -< This is the path where the csv is saved.
+        //String file = "C:\\Users\\65978\\OneDrive - Imperial College London\\Desktop\\test3.csv";
         BufferedReader reader1 = null;
         String line = "";
 
