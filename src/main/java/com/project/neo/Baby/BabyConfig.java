@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
-//creates two baby objects in the mongodb database at runtime
+//creates two baby objects in the mongodb database at runtime. Will have to delete this when submitting otherwise will keep restoring the database.
 
 @Configuration
 public class BabyConfig {

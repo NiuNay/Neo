@@ -5,6 +5,7 @@ import com.project.neo.BabyRepository.Babyrepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,9 +35,10 @@ public class BabyController {
     }
 
     @GetMapping(path = "/{id}") //returns only the specified baby
-    public Optional<Baby> returnSingleBaby(@PathVariable("id") int id) {
-
-        return service.returnSingleBaby(id);
+    public List<Optional> returnSingleBaby(@PathVariable("id") int id) {
+        List <Optional> baby = new ArrayList<>();
+        baby.add(service.returnSingleBaby(id));
+        return baby;
     }
 
     @DeleteMapping(path = "/{id}/delete") //deletes baby by id
