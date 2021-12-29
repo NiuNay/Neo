@@ -62,10 +62,8 @@ public class BabyController {
 
     @PostMapping(path = "/{id}/addDelay")
     public void addDelay(@RequestBody ObjectNode objectNode, @PathVariable("id") int id) {
-        double delay = objectNode.get("delay").asDouble();
-        String start_date = objectNode.get("start_date").asText();
-        String end_date = objectNode.get("end_date").asText();
-        service.addDelay(delay, start_date, end_date, id);
+        Long delay = objectNode.get("delay").asLong();
+        service.addDelay(delay, id);
     }
 
     @PostMapping(path = "/{id}/addCalibration")

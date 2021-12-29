@@ -8,6 +8,9 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Array;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -85,12 +88,35 @@ public class BabyService {
         if (!exists) {
             throw new IllegalStateException("Baby with ID: " + id + "does not exist.");
         }
-
+        //System.out.println("inhere2");
         Optional<Baby> opt = babyrepository.getBabyById(id);
 
         if(opt.isPresent()) {
-            opt.get().getSweatTimestamp().put(time_instant, (sweat_data-opt.get().getCali_intercept())/opt.get().getCali_grad());
-            babyrepository.save(opt.get());
+            DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+            DateTimeFormatter df2 = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            LocalDateTime period = LocalDateTime.parse(time_instant, df); //period stores the date and time of the reading that is currently being stored.
+            String[] fulldate = time_instant.split(" "); //splits date at the space character
+            //System.out.println(fulldate[0]);
+            LocalDate current= LocalDate.parse(fulldate[0], df2); //stores only dd/MM/yyyy part of the date
+            //System.out.println("inhere2");
+            //if there is a delay
+            if (opt.get().getDelay().containsKey(current)) {
+                period = period.minusMinutes(opt.get().getDelay().get(current));
+            }
+
+            //if a calibration has been done that day will search for the changed calibration values
+            if (opt.get().getCali_intercept().containsKey(current) && opt.get().getCali_grad().containsKey(current)) {
+                opt.get().getSweatTimestamp().put(period, (sweat_data-opt.get().getCali_intercept().get(current))/opt.get().getCali_grad().get(current));
+                babyrepository.save(opt.get());
+            }
+            //otherwise will just put in default values of 0.2 for intercept and 1.1 for gradient.
+            else {
+                opt.get().getSweatTimestamp().put(period, (sweat_data-0.2/1.1));
+                babyrepository.save(opt.get());
+            }
+
+
+
         }
 
         else {
@@ -112,7 +138,8 @@ public class BabyService {
 
     //takes the id of the selected baby and retrieves sweat info from the database
     public void UpdateSweatLevels (int i) {
-        String file = "C:\\Users\\65978\\OneDrive - Imperial College London\\Desktop\\"+ i + ".csv"; // -< This is the path where the csv is saved.
+        //String file = "C:\\Users\\65978\\OneDrive - Imperial College London\\Desktop\\"+ i + ".csv"; // -< This is the path where the csv is saved.
+        String file = "C:\\Users\\65978\\OneDrive - Imperial College London\\Desktop\\test3.csv";
         BufferedReader reader1 = null;
         String line = "";
 
@@ -126,7 +153,10 @@ public class BabyService {
                 if (j != 1) {
 
                     String[] row = line.split(","); //element 1 is first column, element 2 is second column
+                    System.out.println(row[0]);
+                    System.out.println(row[1]);
                     add_SweatTimeStamp(row[0], Double.parseDouble(row[1]), i);
+
 
                 }
 
@@ -153,8 +183,9 @@ public class BabyService {
         Optional<Baby> opt = babyrepository.getBabyById(id);
 
         if(opt.isPresent()) {
-            opt.get().setCali_grad(gradient);
-            opt.get().setCali_intercept(intercept);
+            LocalDate current = LocalDate.now();
+            opt.get().getCali_grad().put(current, gradient);
+            opt.get().getCali_intercept().put(current, intercept);
             babyrepository.save(opt.get());
         }
 
@@ -164,7 +195,7 @@ public class BabyService {
 
     }
 
-    public void addDelay(double delay, String start_date, String end_date, int id) {
+    public void addDelay(Long delay, int id) {
         boolean exists = babyrepository.existsById(id);
         if (!exists) {
             throw new IllegalStateException("Baby with ID: " + id + "does not exist.");
@@ -173,7 +204,8 @@ public class BabyService {
         Optional<Baby> opt = babyrepository.getBabyById(id);
 
         if(opt.isPresent()) {
-            opt.get().setDelay(delay);
+            LocalDate current = LocalDate.now();
+            opt.get().getDelay().put(current, delay);
             babyrepository.save(opt.get());
         }
 
@@ -182,3 +214,4 @@ public class BabyService {
         }
     }
 }
+

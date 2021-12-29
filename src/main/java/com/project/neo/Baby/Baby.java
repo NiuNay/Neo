@@ -3,9 +3,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.apache.tomcat.jni.Local;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
@@ -16,12 +19,12 @@ import java.util.LinkedHashMap;
 @NoArgsConstructor
 public class Baby {
     @Id @Getter @Setter private Integer id;
-    @Getter @Setter private double cali_grad = 1.1;
-    @Getter @Setter private double cali_intercept = 0.2;
-    @Getter @Setter private double delay = 20; //in minutes
+    @Getter private LinkedHashMap<LocalDate, Double> cali_grad = new LinkedHashMap<>();
+    @Getter private LinkedHashMap<LocalDate, Double> cali_intercept = new LinkedHashMap<>();
+    @Getter private LinkedHashMap<LocalDate, Long> delay = new LinkedHashMap<>(); //in minutes
     @Getter @Setter private LinkedHashMap< String, String> noteTimestamp = new LinkedHashMap<>();
     @Getter private LinkedHashMap< String, Double> prickTimestamp = new LinkedHashMap<>();
-    @Getter private LinkedHashMap< String, Double> sweatTimestamp = new LinkedHashMap<>();
+    @Getter private LinkedHashMap<LocalDateTime, Double> sweatTimestamp = new LinkedHashMap<>();
 
     public Baby(Integer ID) {
         this.id = ID;
