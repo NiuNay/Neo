@@ -23,7 +23,7 @@ public class Baby {
     @Getter private LinkedHashMap<LocalDate, Double> cali_intercept = new LinkedHashMap<>();
     @Getter private LinkedHashMap<LocalDate, Long> delay = new LinkedHashMap<>(); //in minutes
     @Getter @Setter private LinkedHashMap< String, String> noteTimestamp = new LinkedHashMap<>();
-    @Getter private LinkedHashMap< String, Double> prickTimestamp = new LinkedHashMap<>();
+    @Getter private LinkedHashMap<LocalDateTime, Double> prickTimestamp = new LinkedHashMap<>();
     @Getter private LinkedHashMap<LocalDateTime, Double> sweatTimestamp = new LinkedHashMap<>();
 
     public Baby(Integer ID) {

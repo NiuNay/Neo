@@ -73,7 +73,9 @@ public class BabyService {
         Optional<Baby> opt = babyrepository.getBabyById(id);
 
         if(opt.isPresent()) {
-            opt.get().getPrickTimestamp().put(time_instant, prick_data);
+            DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+            LocalDateTime period = LocalDateTime.parse(time_instant, df);
+            opt.get().getPrickTimestamp().put(period, prick_data);
             babyrepository.save(opt.get());
         }
 
@@ -111,7 +113,7 @@ public class BabyService {
             }
             //otherwise will just put in default values of 0.2 for intercept and 1.1 for gradient.
             else {
-                opt.get().getSweatTimestamp().put(period, (sweat_data-0.2/1.1));
+                opt.get().getSweatTimestamp().put(period, ((sweat_data-0.2)/1.1));
                 babyrepository.save(opt.get());
             }
 
@@ -138,15 +140,15 @@ public class BabyService {
 
     //takes the id of the selected baby and retrieves sweat info from the database
     public void UpdateSweatLevels (int i) {
-        String file = "C:\\Users\\65978\\OneDrive - Imperial College London\\Desktop\\"+ i + ".csv"; // -< This is the path where the csv is saved.
-        //String file = "C:\\Users\\65978\\OneDrive - Imperial College London\\Desktop\\test3.csv";
+        //String file = "C:\\Users\\65978\\OneDrive - Imperial College London\\Desktop\\"+ i + ".csv"; // -< This is the path where the csv is saved.
+        String file = "C:\\Users\\65978\\OneDrive - Imperial College London\\Desktop\\test4.csv";
         BufferedReader reader1 = null;
         String line = "";
 
         System.out.println(file);
         try {
             reader1 = new BufferedReader(new FileReader(file));
-            System.out.println("In here");
+            //System.out.println("In here");
             int j = 1;
             while ((line = reader1.readLine()) != null) {
 
