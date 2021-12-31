@@ -1,13 +1,13 @@
 package com.project.neo.Baby;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.fasterxml.jackson.datatype.jdk8.OptionalDoubleSerializer;
 import com.project.neo.BabyRepository.Babyrepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.time.LocalDateTime;
+import java.util.*;
 
 //this class contains all resources for api layer - what will be returned on the server
 @CrossOrigin(origins = "http://localhost:3000")
@@ -34,12 +34,33 @@ public class BabyController {
         System.out.println("Baby added.");
     }
 
-    @GetMapping(path = "/{id}") //returns only the specified baby
+    /*@GetMapping(path = "/{id}") //returns only the specified baby
     public List<Optional> returnSingleBaby(@PathVariable("id") int id) {
         List <Optional> baby = new ArrayList<>();
         baby.add(service.returnSingleBaby(id));
         return baby;
+    }*/
+
+    @GetMapping(path = "/{id}") //returns only the specified baby
+    public List<Object> returnTimestamps(@PathVariable("id") int id) {
+        Baby baby;
+        List<Object> tobereturned = new ArrayList<>();
+        baby = service.returnSingleBaby(id).get();
+        Set timevalues = baby.getSweatTimestamp().keySet();
+        Collection concentrations = baby.getSweatTimestamp().values();
+        Set pricktime = baby.getPrickTimestamp().keySet();
+        Collection prickvalues = baby.getPrickTimestamp().values();
+        Set notetime = baby.getNoteTimestamp().keySet();
+        Collection notes = baby.getNoteTimestamp().values();
+        tobereturned.add(timevalues);
+        tobereturned.add(concentrations);
+        tobereturned.add(pricktime);
+        tobereturned.add(prickvalues);
+        tobereturned.add(notetime);
+        tobereturned.add(notes);
+        return tobereturned;
     }
+
 
     @DeleteMapping(path = "/{id}/delete") //deletes baby by id
     public void deleteBaby(@PathVariable("id") int id) {
