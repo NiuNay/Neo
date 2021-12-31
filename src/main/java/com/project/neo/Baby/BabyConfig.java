@@ -25,8 +25,6 @@ public class BabyConfig {
             LocalDate date1 = LocalDate.parse("27/12/2021", df2);
             LocalDate date2 = LocalDate.parse("29/12/2021", df2);
 
-
-
             Integer int1 = 124790;
             Integer int2 = 247619;
             Integer int3 = 248575;

@@ -36,20 +36,21 @@ public class BabyService {
         System.out.println("baby saved");
     }
 
-    public void deleteBaby(int id) {
+    private void checkIfBabyExistsInDatabase(int id) {
         boolean exists = babyrepository.existsById(id);
         if (!exists) {
             throw new IllegalStateException("Baby with Id: " + id + " does not exist.");
         }
+    }
+
+    public void deleteBaby(int id) {
+        checkIfBabyExistsInDatabase(id);
         babyrepository.deleteById(id);
         System.out.println("Baby Id: " + id + " has been deleted.");
     }
 
     public void add_NoteTimeStamp(String time_instant, String note, Integer id) {
-        boolean exists = babyrepository.existsById(id);
-        if (!exists) {
-            throw new IllegalStateException("Baby with ID: " + id + "does not exist.");
-        }
+        checkIfBabyExistsInDatabase(id);
 
         Optional<Baby> opt = babyrepository.getBabyById(id);
 
@@ -65,10 +66,7 @@ public class BabyService {
     }
 
     public void add_PrickTimeStamp(String time_instant, double prick_data, int id) {
-        boolean exists = babyrepository.existsById(id);
-        if (!exists) {
-            throw new IllegalStateException("Baby with ID: " + id + "does not exist.");
-        }
+        checkIfBabyExistsInDatabase(id);
 
         Optional<Baby> opt = babyrepository.getBabyById(id);
 
@@ -86,10 +84,8 @@ public class BabyService {
 
     //must calibrate before you
     public void add_SweatTimeStamp(String time_instant, Double sweat_data, int id) {
-        boolean exists = babyrepository.existsById(id);
-        if (!exists) {
-            throw new IllegalStateException("Baby with ID: " + id + "does not exist.");
-        }
+        checkIfBabyExistsInDatabase(id);
+
         //System.out.println("inhere2");
         Optional<Baby> opt = babyrepository.getBabyById(id);
 
@@ -117,8 +113,6 @@ public class BabyService {
                 babyrepository.save(opt.get());
             }
 
-
-
         }
 
         else {
@@ -127,15 +121,12 @@ public class BabyService {
     }
 
     public Optional<Baby> returnSingleBaby(int id) {
-        boolean exists = babyrepository.existsById(id);
-        if (!exists) {
-            throw new IllegalStateException("Baby with ID: " + id + "does not exist.");
-        }
+        checkIfBabyExistsInDatabase(id);
 
         UpdateSweatLevels(id); //This will update sweat values found in the csv
-        Optional<Baby> opt = babyrepository.getBabyById(id);
 
-        return opt;
+
+        return babyrepository.getBabyById(id);
     }
 
     //takes the id of the selected baby and retrieves sweat info from the database
@@ -143,7 +134,7 @@ public class BabyService {
         //String file = "C:\\Users\\65978\\OneDrive - Imperial College London\\Desktop\\"+ i + ".csv"; // -< This is the path where the csv is saved.
         String file = "C:\\Users\\65978\\OneDrive - Imperial College London\\Desktop\\test4.csv";
         BufferedReader reader1 = null;
-        String line = "";
+        String line;
 
         System.out.println(file);
         try {
@@ -177,10 +168,7 @@ public class BabyService {
     }
 
     public void addCalibration(double gradient, double intercept, int id) {
-        boolean exists = babyrepository.existsById(id);
-        if (!exists) {
-            throw new IllegalStateException("Baby with ID: " + id + "does not exist.");
-        }
+        checkIfBabyExistsInDatabase(id);
 
         Optional<Baby> opt = babyrepository.getBabyById(id);
 
@@ -198,10 +186,7 @@ public class BabyService {
     }
 
     public void addDelay(Long delay, int id) {
-        boolean exists = babyrepository.existsById(id);
-        if (!exists) {
-            throw new IllegalStateException("Baby with ID: " + id + "does not exist.");
-        }
+        checkIfBabyExistsInDatabase(id);
 
         Optional<Baby> opt = babyrepository.getBabyById(id);
 
