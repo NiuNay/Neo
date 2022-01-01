@@ -1,20 +1,34 @@
 package com.project.neo.Baby;
 
+import lombok.NoArgsConstructor;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+@SpringBootTest
+@NoArgsConstructor
 class BabyServiceTest {
 
+    @Autowired
+    private BabyService service;
+
     @Test
-    void returnBaby() {
+    void shouldAddNewBaby() {
+        Integer id = 124795;
+        Baby example_baby = new Baby(id);
+
+        service.addNewBaby(example_baby);
+
+        Assertions.assertFalse(service.returnSingleBaby(id).isEmpty());
     }
 
     @Test
-    void addNewBaby() {
-    }
-
-    @Test
-    void deleteBaby() {
+    void shouldDeleteBaby() {
+        Integer id = 124795;
+        service.deleteBaby(id);
+        Assertions.assertThrows(IllegalStateException.class, ()-> service.returnSingleBaby(id));
     }
 
     @Test

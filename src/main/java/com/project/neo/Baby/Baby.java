@@ -1,8 +1,5 @@
 package com.project.neo.Baby;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.apache.tomcat.jni.Local;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -35,11 +32,8 @@ public class Baby {
         this.noteTimestamp = baby.getNoteTimestamp();
         this.prickTimestamp = baby.getPrickTimestamp();
         this.sweatTimestamp = baby.getSweatTimestamp();
+        this.cali_grad = baby.getCali_grad();
+        this.cali_intercept = baby.getCali_intercept();
+        this.delay = baby.getDelay();
     }
-
-    public Integer getId() {
-        return id;
-    }
-
-
 }

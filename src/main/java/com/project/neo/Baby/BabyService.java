@@ -123,8 +123,7 @@ public class BabyService {
     public Optional<Baby> returnSingleBaby(int id) {
         checkIfBabyExistsInDatabase(id);
 
-        UpdateSweatLevels(id); //This will update sweat values found in the csv
-
+        // UpdateSweatLevels(id); //This will update sweat values found in the csv
 
         return babyrepository.getBabyById(id);
     }
