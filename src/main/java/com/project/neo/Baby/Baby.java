@@ -22,6 +22,7 @@ public class Baby {
     @Getter @Setter private LinkedHashMap< String, String> noteTimestamp = new LinkedHashMap<>();
     @Getter private LinkedHashMap<LocalDateTime, Double> prickTimestamp = new LinkedHashMap<>();
     @Getter private LinkedHashMap<LocalDateTime, Double> sweatTimestamp = new LinkedHashMap<>();
+    @Getter @Setter int prev_point = 1; //stores the value of where the previous reading was stored (from the last time the GET request was sent)
 
     public Baby(Integer ID) {
         this.id = ID;

@@ -58,7 +58,7 @@ public class BabyController {
         tobereturned.add(prickvalues);
         tobereturned.add(notetime);
         tobereturned.add(notes);
-        System.out.println("Done");
+        System.out.println("Returned all fields to frontend");
         return tobereturned;
     }
 

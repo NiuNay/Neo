@@ -77,7 +77,6 @@ public class BabyService {
         Optional<Baby> opt = babyrepository.getBabyById(id);
 
         if (opt.isPresent()) {
-            //DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
             LocalDateTime period = LocalDateTime.parse(time_instant, df);
             opt.get().getPrickTimestamp().put(period, prick_data);
             babyrepository.save(opt.get());
@@ -93,8 +92,8 @@ public class BabyService {
         Optional<Baby> opt = babyrepository.getBabyById(id);
 
         if (opt.isPresent()) {
-
-            for (int i = 0; i < timeStamps.size(); i++) {
+            //starts from where it last ended
+            for (int i = opt.get().getPrev_point()-1; i < timeStamps.size(); i++) {
 
                 LocalDateTime period = LocalDateTime.parse(timeStamps.get(i), df); //period stores the date and time of the reading that is currently being stored.
                 String[] fulldate = split(timeStamps.get(i), ' '); //splits date at the space character
@@ -121,6 +120,9 @@ public class BabyService {
             }
 
             babyrepository.save(opt.get());
+            opt.get().setPrev_point(timeStamps.size());
+            timeStamps.clear();
+            currentValues.clear();
 
         }
     }
@@ -137,11 +139,11 @@ public class BabyService {
     //takes the id of the selected baby and retrieves sweat info from the database
     public void UpdateSweatLevels(int i) {
         //String file = "C:\\Users\\65978\\OneDrive - Imperial College London\\Desktop\\"+ i + ".csv"; // -< This is the path where the csv is saved.
-        String file = "C:\\Users\\65978\\OneDrive - Imperial College London\\Desktop\\CurrentValues.csv";
+        String file = "C:\\Users\\65978\\OneDrive - Imperial College London\\Desktop\\test5.csv";
         BufferedReader reader1 = null;
         String line;
 
-        System.out.println(file);
+
         try {
             reader1 = new BufferedReader(new FileReader(file));
 
