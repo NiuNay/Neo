@@ -1,5 +1,6 @@
 package com.project.neo.Baby;
 
+import com.project.neo.AmazonS3.S3Service;
 import com.project.neo.BabyRepository.Babyrepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -16,11 +17,10 @@ import java.util.List;
 public class BabyConfig {
 
     @Bean //ensures that this runs during runtime
-    CommandLineRunner commandLineRunner(Babyrepository repository) {
+    CommandLineRunner commandLineRunner(Babyrepository repository, S3Service amazonservice) {
         return args -> {
-            BabyService service = new BabyService(repository);
-            /*DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-            LocalDateTime period = LocalDateTime.parse("27/12/2021 10:20:19", df);*/
+            BabyService service = new BabyService(repository, amazonservice);
+
             DateTimeFormatter df2 = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             LocalDate date1 = LocalDate.parse("27/12/2021", df2);
             LocalDate date2 = LocalDate.parse("29/12/2021", df2);
