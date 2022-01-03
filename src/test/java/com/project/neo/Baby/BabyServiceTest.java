@@ -16,7 +16,7 @@ class BabyServiceTest {
 
     @Test
     void shouldAddNewBaby() {
-        Integer id = 124795;
+        int id = 124795;
         Baby example_baby = new Baby(id);
 
         service.addNewBaby(example_baby);
@@ -26,7 +26,7 @@ class BabyServiceTest {
 
     @Test
     void shouldDeleteBaby() {
-        Integer id = 124795;
+        int id = 124795;
         service.deleteBaby(id);
         Assertions.assertThrows(IllegalStateException.class, ()-> service.returnSingleBaby(id));
     }

@@ -1,7 +1,5 @@
-package com.project.neo.User.Controller;
+package com.project.neo.User;
 
-import com.project.neo.User.Model.User;
-import com.project.neo.User.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
