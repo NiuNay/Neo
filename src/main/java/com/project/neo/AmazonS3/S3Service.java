@@ -17,11 +17,11 @@ import java.io.File;
 public class S3Service {
     private AmazonS3 s3client;
 
-    @Value("${s3.accessKeyId}")
-    private String accessKeyId;
+    //@Value("${s3.accessKeyId}")
+    private String accessKeyId = System.getenv("KEY_ID");
 
-    @Value("${s3.secretKey}")
-    private String secretKey;
+    //@Value("${s3.secretKey}")
+    private String secretKey = System.getenv("SECRET_KEY");
 
     @Value("${s3.region}")
     private String region;
