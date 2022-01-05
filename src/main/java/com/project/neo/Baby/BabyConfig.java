@@ -41,7 +41,9 @@ public class BabyConfig {
             baby1.getCali_intercept().put(date2, 4.0);
             baby1.getDelay().put(date2, (long) 40.0);
 
-            repository.saveAll(List.of(baby1, baby2, baby3));
+            repository.save(baby1);
+            repository.save(baby2);
+            repository.save(baby3);
 
             /*String date = "27/12/2021 10:20:19";
             String[] d = date.split(" ");
