@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 //this class contains all resources for api layer - what will be returned on the server
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "https://neo-patient-care.herokuapp.com/")
 @RestController //defines this as the api layer - which communicates directly with client/server
 @RequestMapping//(path="/api") //sets the url where the end points will be returned
 public class BabyController {
