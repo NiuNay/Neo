@@ -10,17 +10,18 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
-//creates two baby objects in the mongodb database at runtime. Will have to delete this when submitting otherwise will keep restoring the database.
 
+/**
+ * This class automatically creates 3 baby objects when the server is launched.
+ */
 @Configuration
 public class BabyConfig {
 
-    @Bean //ensures that this runs during runtime
+    @Bean
     CommandLineRunner commandLineRunner(Babyrepository repository) {
         return args -> {
             BabyService service = new BabyService(repository);
-            /*DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-            LocalDateTime period = LocalDateTime.parse("27/12/2021 10:20:19", df);*/
+
             DateTimeFormatter df2 = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             LocalDate date1 = LocalDate.parse("27/12/2021", df2);
             LocalDate date2 = LocalDate.parse("29/12/2021", df2);
@@ -43,11 +44,7 @@ public class BabyConfig {
 
             repository.saveAll(List.of(baby1, baby2, baby3));
 
-            /*String date = "27/12/2021 10:20:19";
-            String[] d = date.split(" ");
-            System.out.println(d[0]);
-            System.out.println(d[1]);
-            System.out.println(period.minusMinutes(20));*/
+
     };
 
 }}

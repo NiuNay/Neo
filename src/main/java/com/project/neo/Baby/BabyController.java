@@ -1,46 +1,48 @@
 package com.project.neo.Baby;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.fasterxml.jackson.datatype.jdk8.OptionalDoubleSerializer;
-import com.project.neo.BabyRepository.Babyrepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDateTime;
 import java.util.*;
 
-//this class contains all resources for api layer - what will be returned on the server
+/**
+ * This class contains all resources for the API layer. It communicates directly with frontend through the different
+ * http requests that are annotated at the top of each method representing RESTful endpoints.
+ */
 @CrossOrigin(origins = "http://localhost:3000")
-@RestController //defines this as the api layer - which communicates directly with client/server
+@RestController
 @RequestMapping//(path="/api") //sets the url where the end points will be returned
 public class BabyController {
     private final BabyService service;
 
-    @Autowired //This tells the program to make a dependency injection for BabyService obj. BabyService class has been annotated with @service so it knows where to find it
+    @Autowired
     public BabyController(BabyService service) {
         this.service = service;
     }
 
-    @GetMapping //makes this a restful end point by default so this is what is returned to the server. Returns full list of all babies in db
+    @GetMapping
     public List<Baby> returnBaby() {
         return service.returnBaby();
     }
 
-
-
-    @PostMapping(path = "/addBaby") //adds baby
-    public void addNewBaby(@RequestBody Baby baby) { //from the request body of the client map it to a baby
+    @PostMapping(path = "/addBaby")
+    public void addNewBaby(@RequestBody Baby baby) {
         service.addNewBaby(baby);
         System.out.println("Baby added.");
     }
 
-    /*@GetMapping(path = "/{id}") //returns only the specified baby
-    public List<Optional> returnSingleBaby(@PathVariable("id") int id) {
-        List <Optional> baby = new ArrayList<>();
-        baby.add(service.returnSingleBaby(id));
-        return baby;
-    }*/
-
+    /**
+     * This method will return all fields of the baby object specified by id in order to display all data, including
+     * graphing out the sweat and prick data under the "view glucose levels" function in frontend.
+     * @param id specifies which baby object to return from the database
+     * @return returns baby object as a list of lists - each sublist stores a different field where:
+     * 1. Sweat timestamps
+     * 2. Sweat values
+     * 3. Prick timestamps
+     * 4. Prick values
+     * 5. Note Timestamps
+     * 6. Notes
+     */
     @GetMapping(path = "/{id}") //returns only the specified baby
     public List<Object> returnTimestamps(@PathVariable("id") int id) {
         Baby baby;
@@ -68,14 +70,19 @@ public class BabyController {
         service.deleteBaby(id);
     }
 
-    //the request body of the post method maps to only one object - objectnode.
-    //time instant and note are then extracted separately.
+    /**
+     * This method adds a note be stored in the baby object note hashmap.
+     * @param objectNode Stores the JSON request body sent from frontend in object node. In this case, it allows extraction of the values
+     *                   specified under "time_instant" and "note".
+     * @param id Specifies which patient to edit.
+     */
     @PostMapping(path = "/{id}/addNote")
     public void addNewNote(@RequestBody ObjectNode objectNode, @PathVariable("id") int id) {
         String time_instant = objectNode.get("time_instant").asText();
         String note = objectNode.get("note").asText();
         service.add_NoteTimeStamp(time_instant, note, id);
     }
+
 
     @PostMapping(path = "/{id}/addPrickData")
     public void addNewPrick(@RequestBody ObjectNode objectNode, @PathVariable("id") int id) {

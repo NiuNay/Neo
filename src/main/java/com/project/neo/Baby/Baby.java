@@ -9,8 +9,12 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
-//needs function to take data from excel sheet continuously
-//set and get methods
+/**
+ * This class is the application's document class.
+ * <p>Each baby object contains a unique id, along with hashmaps for storing the calibration values,
+ * delay values, note values, and sweat and prick data. The key for each hashmap contains the date and
+ * time for each corresponding value. </p>
+ */
 @ToString
 @Document(collection = "Babies") //for MongoDB to recognise which collection this is for
 @NoArgsConstructor
@@ -36,5 +40,6 @@ public class Baby {
         this.cali_grad = baby.getCali_grad();
         this.cali_intercept = baby.getCali_intercept();
         this.delay = baby.getDelay();
+        this.prev_point = baby.getPrev_point();
     }
 }

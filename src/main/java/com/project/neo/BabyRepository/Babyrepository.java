@@ -6,8 +6,11 @@ import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
-//This is the data layer that interfaces directly with the local database
 
+/**
+ * This interface represents the Data layer of the application that provides direct access to objects in the MongoDB
+ * database.
+ */
 @Repository
 public interface Babyrepository extends MongoRepository<Baby, Integer> {
     @Query(value = "{'id':?0}")

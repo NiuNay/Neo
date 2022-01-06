@@ -14,7 +14,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-//This class contains the business functions
+/**
+ * This class forms the business layer of the application.  It serves as the middle layer between the API layer (Babycontroller)
+ * and the data layer (Babyrepository). This is where all core operations are executed.
+ */
 @Service
 public class BabyService {
     private final Babyrepository babyrepository;
@@ -31,7 +34,7 @@ public class BabyService {
 
     // method does not work, check over
     public List<Baby> returnBaby() {
-        return babyrepository.findAll(); //this is where service layer interacts with data layer
+        return babyrepository.findAll();
     }
 
     public void addNewBaby(Baby baby) {
@@ -81,33 +84,42 @@ public class BabyService {
         }
     }
 
+    /**
+     * This method scans through timeStamps and currentValues lists which store the data imported form the csv file,
+     * applies the delay and calibrations specified by the user (if any) to convert sweat data from current (nA) to
+     * blood glucose concentrations (mmol/l) and then updates these values for the baby stored in the database.
+     *
+     * Only data after the previous GET request was made is proccessed.
+     *
+     * By default, a delay for 20 minutes is set with a calibration intercept of 0.2mmol/l and gradient of 1.1mmol/l/time,
+     * which will run unless the user has inputted custom values for that day.
+     * @param id identifies baby object stored in database to perform operations on.
+     */
     public void add_SweatTimeStamp(int id) {
         checkIfBabyExistsInDatabase(id);
-
-
         Optional<Baby> opt = babyrepository.getBabyById(id);
 
         if (opt.isPresent()) {
-            //starts from where it last ended
+
             for (int i = opt.get().getPrev_point()-1; i < timeStamps.size(); i++) {
 
-                LocalDateTime period = LocalDateTime.parse(timeStamps.get(i), df); //period stores the date and time of the reading that is currently being stored.
-                String[] fulldate = split(timeStamps.get(i), ' '); //splits date at the space character
+                LocalDateTime period = LocalDateTime.parse(timeStamps.get(i), df);
+                String[] fulldate = split(timeStamps.get(i), ' ');
 
 
-                LocalDate current = LocalDate.parse(fulldate[0], df2); //stores only dd/MM/yyyy part of the date
+                LocalDate current = LocalDate.parse(fulldate[0], df2);
 
 
-                //if there is a delay
+
                 if (opt.get().getDelay().containsKey(current)) {
                     period = period.minusMinutes(opt.get().getDelay().get(current));
                 }
 
-                //if a calibration has been done that day will search for the changed calibration values
+
                 if (opt.get().getCali_intercept().containsKey(current) && opt.get().getCali_grad().containsKey(current)) {
                     opt.get().getSweatTimestamp().put(period, ((Double.parseDouble(currentValues.get(i)) - opt.get().getCali_intercept().get(current)) / opt.get().getCali_grad().get(current)));
                 }
-                //otherwise will just put in default values of 0.2 for intercept and 1.1 for gradient.
+
                 else {
                     opt.get().getSweatTimestamp().put(period, ((Double.parseDouble(currentValues.get(i)) - 0.2) / 1.1));
                 }
@@ -123,16 +135,27 @@ public class BabyService {
         }
     }
 
-
+    /**
+     * This method is called by the API layer whenever the user wants to view glucose levels. Once called, it calls the
+     * updatesweatlevels method which reads data from the specific babies csv data file (which will be named as its id.csv).
+     * This then calls the add_SweatTimestamp method which calibrates and stores the data in the database.
+     * @param id
+     * @return Returns the updated baby object stored in the database once all operations have been conducted to the
+     * API layer.
+     */
     public Optional<Baby> returnSingleBaby(int id) {
         checkIfBabyExistsInDatabase(id);
 
-        UpdateSweatLevels(id); //This will update sweat values found in the csv
+        UpdateSweatLevels(id);
 
         return babyrepository.getBabyById(id);
     }
 
-    //takes the id of the selected baby and retrieves sweat info from the database
+    /**
+     * This method reads in the csv file and stores it in the lists timeStamps and currentValues. Once values have been
+     * stored, it calls the add_timestamps method which analyses and saves the data to the specific baby object.
+     * @param i stores the value of the baby id that is being analysed.
+     */
     public void UpdateSweatLevels(int i) {
         String file = "C:\\Users\\pouge\\Documents\\"+ i + ".csv"; // -< This is the path where the csv is saved.
 //        String file = "C:\\Users\\pouge\\Documents\\124790.csv";
