@@ -10,7 +10,7 @@ import java.util.*;
  * http requests that are annotated at the top of each method representing RESTful endpoints.
  */
 //@CrossOrigin(origins = "https://neo-patient-care.herokuapp.com/")
-@CrossOrigin(origins = "https://localhost:3000")
+@CrossOrigin(origins = "https://localhost:3000/")
 @RestController //defines this as the api layer - which communicates directly with client/server
 @RequestMapping//(path="/api") //sets the url where the end points will be returned
 public class BabyController {
