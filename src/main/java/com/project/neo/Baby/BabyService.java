@@ -34,24 +34,41 @@ public class BabyService {
     private DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
     private DateTimeFormatter df2 = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-
+    /**
+     * This method conducts a dependency injection for the babyrepository interface to connect with the mongoDB database,
+     * and the amazonfile object that connects it to the S3 bucket containing sweat data.
+     * @param babyrepository Object to connect to mongoDB database.
+     * @param amazonfile Object to cnonect to S3 Bucket.
+     */
     @Autowired
     public BabyService(Babyrepository babyrepository, S3Service amazonfile) {
         this.babyrepository = babyrepository;
         this.amazonfile = amazonfile;
     }
 
+    /**
+     * Returns list of all baby objects currently stored in the database.
+     * @return list of all baby objects.
+     */
     // method does not work, check over
     public List<Baby> returnBaby() {
         return babyrepository.findAll();
     }
 
+    /**
+     * Adds a new baby to the database.
+     * @param baby New baby object to be added to database.
+     */
     public void addNewBaby(Baby baby) {
         System.out.println(baby);
         babyrepository.save(baby);
         System.out.println("baby saved");
     }
 
+    /**
+     * Checks if baby, identified by id, exists in the database.
+     * @param id Baby id that is to be found.
+     */
     private void checkIfBabyExistsInDatabase(int id) {
         boolean exists = babyrepository.existsById(id);
         if (!exists) {
@@ -59,12 +76,23 @@ public class BabyService {
         }
     }
 
+    /**
+     * Deletes baby by id from database.
+     * @param id Id of baby to be deleted from database.
+     */
     public void deleteBaby(int id) {
         checkIfBabyExistsInDatabase(id);
         babyrepository.deleteById(id);
         System.out.println("Baby Id: " + id + " has been deleted.");
     }
 
+    /**
+     * Adds a note at a specific timestamp to a specific baby in the database by creating a new key-value pair in the note
+     * timestamp hashmap.
+     * @param time_instant Time at which note occurred.
+     * @param note String containing description to be added.
+     * @param id Specific baby to add note to.
+     */
     public void add_NoteTimeStamp(String time_instant, String note, Integer id) {
         checkIfBabyExistsInDatabase(id);
 
@@ -79,6 +107,13 @@ public class BabyService {
 
     }
 
+    /**
+     * Adds prick data at a specific timestamp to a specific baby in the database by creating a new key-value pair in the prickdata
+     * timestamp hashmap.
+     * @param time_instant Time at which prick reading occurred.
+     * @param prick_data Prick data.
+     * @param id Specific baby to add prick data to.
+     */
     public void add_PrickTimeStamp(String time_instant, double prick_data, int id) {
         checkIfBabyExistsInDatabase(id);
 
@@ -102,6 +137,10 @@ public class BabyService {
      *
      * By default, a delay for 20 minutes is set with a calibration intercept of 0.2mmol/l and gradient of 1.1mmol/l/time,
      * which will run unless the user has inputted custom values for that day.
+     *
+     * Calculation is as such:
+     * Blood-Glucose concenteration = (Current value - Intercept)/Gradient.
+     *
      * @param id identifies baby object stored in database to perform operations on.
      */
     public void add_SweatTimeStamp(int id) {
@@ -148,7 +187,7 @@ public class BabyService {
      * This method is called by the API layer whenever the user wants to view glucose levels. Once called, it calls the
      * updatesweatlevels method which reads data from the specific babies csv data file (which will be named as its id.csv).
      * This then calls the add_SweatTimestamp method which calibrates and stores the data in the database.
-     * @param id
+     * @param id Specific baby to be analysed.
      * @return Returns the updated baby object stored in the database once all operations have been conducted to the
      * API layer.
      */
@@ -212,6 +251,13 @@ public class BabyService {
         }
     }
 
+    /**
+     * Adds calibration for the current day for both gradient and intercept by adding a new key-value pair in the specific
+     * baby's sweat time stamp hashmap.
+     * @param gradient Gradient of calibration graph.
+     * @param intercept Intercept of calibration graph.
+     * @param id Id of specific baby.
+     */
     public void addCalibration(double gradient, double intercept, int id) {
         checkIfBabyExistsInDatabase(id);
 
@@ -228,6 +274,12 @@ public class BabyService {
 
     }
 
+    /**
+     * Adds delay for the current day  by adding a new key-value pair in the specific
+     * baby's delay time stamp hashmap.
+     * @param delay Gradient of calibration graph.
+     * @param id Id of specific baby.
+     */
     public void addDelay(Long delay, int id) {
         checkIfBabyExistsInDatabase(id);
 
@@ -242,7 +294,12 @@ public class BabyService {
         }
     }
 
-
+    /**
+     * Splits a string at a particular character.
+     * @param line Line to be split
+     * @param delimiter Character at which split should occur
+     * @return Array of split string.
+     */
     public String[] split(String line, Character delimiter) {
         int j = line.indexOf(delimiter);
         String[] result = new String[2];

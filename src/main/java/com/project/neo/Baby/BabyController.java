@@ -16,16 +16,30 @@ import java.util.*;
 public class BabyController {
     private final BabyService service;
 
+    /**
+     * Constructor conducts a dependency injection of the baby service object.
+     * @param service The BabyService object to be injected in to the controller class.
+     */
     @Autowired
     public BabyController(BabyService service) {
         this.service = service;
     }
 
+    /**
+     * This method returns a list of all baby objects currently in the MongoDB database.
+     * @return List of all baby objects in the database.
+     */
     @GetMapping
     public List<Baby> returnBaby() {
         return service.returnBaby();
     }
 
+    /**
+     * This method allows the user to add new babies into the system. This URL will not be accessible from the frontend
+     * to control who is able to add new babies into the system. To add a baby, the user will send a POST request to
+     * this URL with the body specifying the fields of the baby to be added, such as id and previous data.
+     * @param baby Baby object to be added.
+     */
     @PostMapping(path = "/addBaby")
     public void addNewBaby(@RequestBody Baby baby) {
         service.addNewBaby(baby);
@@ -65,7 +79,10 @@ public class BabyController {
         return tobereturned;
     }
 
-
+    /**
+     * This method deletes a baby by id that is currently stored in the database.
+     * @param id Id of baby to be deleted.
+     */
     @DeleteMapping(path = "/{id}/delete") //deletes baby by id
     public void deleteBaby(@PathVariable("id") int id) {
         service.deleteBaby(id);
@@ -84,7 +101,12 @@ public class BabyController {
         service.add_NoteTimeStamp(time_instant, note, id);
     }
 
-
+    /**
+     * This method allows users to add a prick data at a specific time instant to a specific baby stored in the database.
+     * @param objectNode Stores the JSON request body sent from frontend in object node. In this case, it allows extraction of the values
+     *                  specified under "time_instant" and "prick_data".
+     * @param id Id of baby to store prick data in.
+     */
     @PostMapping(path = "/{id}/addPrickData")
     public void addNewPrick(@RequestBody ObjectNode objectNode, @PathVariable("id") int id) {
         String time_instant = objectNode.get("time_instant").asText();
@@ -92,12 +114,24 @@ public class BabyController {
         service.add_PrickTimeStamp(time_instant, prick_data, id);
     }
 
+    /**
+     * This method allows users to add a delay for the current day into a specific baby stored in the database.
+     * @param objectNode Stores the JSON request body sent from frontend in object node. In this case, it allows extraction of the values
+     *                   specified under "delay".
+     * @param id Id of baby to add delay to.
+     */
     @PostMapping(path = "/{id}/addDelay")
     public void addDelay(@RequestBody ObjectNode objectNode, @PathVariable("id") int id) {
         Long delay = objectNode.get("delay").asLong();
         service.addDelay(delay, id);
     }
 
+    /**
+     * This method allows users to add a calibration for the current day to a specific baby stored in the database.
+     * @param objectNode Stores the JSON request body sent from frontend in object node. In this case, it allows extraction of the values
+     *                   specified under "gradient" and "intercept".
+     * @param id Id of baby to add calibration to.
+     */
     @PostMapping(path = "/{id}/addCalibration")
     public void addCalibration(@RequestBody ObjectNode objectNode, @PathVariable("id") int id) {
         double gradient = objectNode.get("gradient").asDouble();
