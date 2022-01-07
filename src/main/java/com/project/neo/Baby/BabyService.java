@@ -1,5 +1,10 @@
 package com.project.neo.Baby;
 
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+import com.amazonaws.services.s3.model.GetObjectRequest;
+import com.amazonaws.services.s3.model.S3Object;
+import com.project.neo.AmazonS3.S3Service;
 import com.project.neo.BabyRepository.Babyrepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -7,6 +12,8 @@ import org.springframework.stereotype.Service;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.*;
+import java.sql.Array;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -21,6 +28,7 @@ import java.util.Optional;
 @Service
 public class BabyService {
     private final Babyrepository babyrepository;
+    private final S3Service amazonfile;
     private List<String> timeStamps = new ArrayList<>();
     private List<String> currentValues = new ArrayList<>();
     private DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
@@ -28,8 +36,9 @@ public class BabyService {
 
 
     @Autowired
-    public BabyService(Babyrepository babyrepository) {
+    public BabyService(Babyrepository babyrepository, S3Service amazonfile) {
         this.babyrepository = babyrepository;
+        this.amazonfile = amazonfile;
     }
 
     // method does not work, check over
@@ -157,14 +166,20 @@ public class BabyService {
      * @param i stores the value of the baby id that is being analysed.
      */
     public void UpdateSweatLevels(int i) {
-        String file = "C:\\Users\\pouge\\Documents\\"+ i + ".csv"; // -< This is the path where the csv is saved.
-//        String file = "C:\\Users\\pouge\\Documents\\124790.csv";
+        String file = i + ".csv"; // -< This is the path where the csv is saved.
+        //String file = "C:\\Users\\65978\\OneDrive - Imperial College London\\Desktop\\test5.csv";
+        String bucket_name = "sweatdataprogramming3";
+        S3Object object = amazonfile.getsweatData(bucket_name, file);
+
+
+        InputStream objectData = object.getObjectContent();
+
         BufferedReader reader1 = null;
         String line;
 
 
         try {
-            reader1 = new BufferedReader(new FileReader(file));
+            reader1 = new BufferedReader(new InputStreamReader(object.getObjectContent()));
 
             int j = 1;
             while ((line = reader1.readLine()) != null) {
@@ -189,7 +204,7 @@ public class BabyService {
             e.printStackTrace();
         } finally {
             try {
-                reader1.close();
+                objectData.close();
             } catch (IOException e) {
 
                 e.printStackTrace();

@@ -9,8 +9,8 @@ import java.util.*;
  * This class contains all resources for the API layer. It communicates directly with frontend through the different
  * http requests that are annotated at the top of each method representing RESTful endpoints.
  */
-@CrossOrigin(origins = "http://localhost:3000")
-@RestController
+@CrossOrigin(origins = "https://neo-patient-care.herokuapp.com/")
+@RestController //defines this as the api layer - which communicates directly with client/server
 @RequestMapping//(path="/api") //sets the url where the end points will be returned
 public class BabyController {
     private final BabyService service;
