@@ -19,9 +19,9 @@ import java.util.List;
 public class BabyConfig {
 
     @Bean
-    CommandLineRunner commandLineRunner(Babyrepository repository) {
+    CommandLineRunner commandLineRunner(Babyrepository repository, S3Service amazonservice) {
         return args -> {
-            BabyService service = new BabyService(repository);
+            BabyService service = new BabyService(repository, amazonservice);
 
             DateTimeFormatter df2 = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             LocalDate date1 = LocalDate.parse("27/12/2021", df2);
