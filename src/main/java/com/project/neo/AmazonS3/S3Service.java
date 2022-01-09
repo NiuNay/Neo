@@ -23,10 +23,13 @@ public class S3Service {
     private AmazonS3 s3client;
 
 
-    private String accessKeyId = System.getenv("KEY_ID");
+    //private String accessKeyId = System.getenv("KEY_ID");
+    @Value("${cloud.aws.credentials.access-key}$")
+    private String accessKeyId;
 
-
-    private String secretKey = System.getenv("SECRET_KEY");
+    //private String secretKey = System.getenv("SECRET_KEY");
+    @Value("${cloud.aws.credentials.secret-key}$")
+    private String secretKey;
 
     @Value("${s3.region}")
     private String region;
