@@ -1,11 +1,20 @@
 package com.project.neo.Baby;
 
+import com.project.neo.BabyRepository.Babyrepository;
 import lombok.NoArgsConstructor;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.test.context.event.annotation.AfterTestMethod;
+
+/**
+ * This class is the application's test class for the BabyService class.
+ *
+ * <p> This class tests the various methods provided in the BabyService class before the application is run. The class
+ * is dependency injected with an instance of the BabyService class in order to carry out the required tests. </p>
+ */
 
 @SpringBootTest
 @NoArgsConstructor
@@ -14,7 +23,11 @@ class BabyServiceTest {
     @Autowired
     private BabyService service;
 
+    @Autowired
+    private Babyrepository babyrepository;
+
     @Test
+    @DisplayName("Should add a baby")
     void shouldAddNewBaby() {
         int id = 124795;
         Baby example_baby = new Baby(id);
@@ -25,6 +38,7 @@ class BabyServiceTest {
     }
 
     @Test
+    @DisplayName("Should delete a baby")
     void shouldDeleteBaby() {
         int id = 124795;
         service.deleteBaby(id);
@@ -32,30 +46,15 @@ class BabyServiceTest {
     }
 
     @Test
-    void add_NoteTimeStamp() {
+    @DisplayName("Should return all babies in database")
+    void shouldReturnBaby() {
+        Assertions.assertFalse(service.returnBaby().isEmpty());
+        Assertions.assertTrue(service.returnBaby().size()>0);
     }
 
     @Test
-    void add_PrickTimeStamp() {
-    }
+    @DisplayName("Should add a note time stamp to the Baby instance")
+    void shouldAddNoteTimeStamp() {
 
-    @Test
-    void add_SweatTimeStamp() {
-    }
-
-    @Test
-    void returnSingleBaby() {
-    }
-
-    @Test
-    void updateSweatLevels() {
-    }
-
-    @Test
-    void addCalibration() {
-    }
-
-    @Test
-    void addDelay() {
     }
 }
