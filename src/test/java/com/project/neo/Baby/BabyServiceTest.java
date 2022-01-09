@@ -2,9 +2,7 @@ package com.project.neo.Baby;
 
 import com.project.neo.BabyRepository.Babyrepository;
 import lombok.NoArgsConstructor;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.event.annotation.AfterTestMethod;
@@ -26,14 +24,22 @@ class BabyServiceTest {
     @Autowired
     private Babyrepository babyrepository;
 
+    /**
+     * Will run before any test method in order to set up the tests.
+     * No parameters are passed into method. Will log when set-up is complete.
+     */
+
+    @BeforeAll
+    public static void settingUpTests() {
+
+    }
+
     @Test
     @DisplayName("Should add a baby")
-    void shouldAddNewBaby() {
+    public void shouldAddNewBaby() {
         int id = 124795;
-        Baby example_baby = new Baby(id);
-
+        Baby example_baby = new Baby(124795);
         service.addNewBaby(example_baby);
-
         Assertions.assertFalse(service.returnSingleBaby(id).isEmpty());
     }
 
@@ -55,6 +61,11 @@ class BabyServiceTest {
     @Test
     @DisplayName("Should add a note time stamp to the Baby instance")
     void shouldAddNoteTimeStamp() {
+
+    }
+
+    @AfterAll
+    public static void cleaningUpTests() {
 
     }
 }

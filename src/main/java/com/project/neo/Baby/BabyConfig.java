@@ -44,8 +44,6 @@ public class BabyConfig {
             repository.save(baby2);
             repository.save(baby3);
 
-
-
     };
 
 }}
