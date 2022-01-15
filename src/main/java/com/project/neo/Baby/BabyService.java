@@ -208,7 +208,6 @@ public class BabyService {
         String bucket_name = "sweatdataprogramming3";
         S3Object object = amazonfile.getsweatData(bucket_name, file);
 
-
         InputStream objectData = object.getObjectContent();
 
         BufferedReader reader1 = null;
@@ -273,7 +272,7 @@ public class BabyService {
     }
 
     /**
-     * Adds delay for the current day  by adding a new key-value pair in the specific
+     * Adds delay for the current day by adding a new key-value pair in the specific
      * baby's delay time stamp hashmap.
      * @param delay Gradient of calibration graph.
      * @param id Id of specific baby.
