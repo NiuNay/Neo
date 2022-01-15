@@ -179,7 +179,6 @@ class BabyServiceTest {
     void shouldAddSweatTimeStamp() {
         int id = 124790;
         Baby baby = babyrepository.getBabyById(id).get();
-        service.UpdateSweatLevels(id);
 
         if (babyrepository.getBabyById(id).isPresent()) {
             service.add_SweatTimeStamp(id);
