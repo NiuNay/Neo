@@ -44,8 +44,8 @@ When the "View Glucose Levels" page is first assessed, depending on the data, th
 
 
 ## Deployment
-Since the frontend and backend of the project were developed on separate repositories, they are both continuously integrated and deployed on Heroku. 
-As mentioned above, the frontend url can be found at: https://neo-patient-care.herokuapp.com/ 
+Since the frontend and backend of the project were developed on separate repositories, they are both continuously integrated and deployed on Heroku. <br />
+As mentioned above, the frontend url can be found at: https://neo-patient-care.herokuapp.com/ <br />
 The backend url can be found at: https://neo-monitoring.herokuapp.com/
 
 
