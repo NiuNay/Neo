@@ -25,10 +25,31 @@ Each time the user presses the "View Glucose Levels" function to view the glucos
 
 In general clinicians check patient vital signs every 4 hours, and assuming that data from the device is sent every 10s, this would mean 1440 data points will be added to the database at the time of each check. Our test csv file contains 3k data points from a sampled sine signal, which demonstrates that it would still comfortably operate regardless of how data is transmitted from the device.
 
+## Manually Inputting Prick Data, Calibration, Notes and Delay
+
+If the user wants to input prick data, calibration (in the form of gradient or intercept) or delay they can do so on the respective input pages. Once the save data button is clicked, the data will be funneled to the MongoDB Atlas database.
+
+After inputting the desired fields, if the user goes back to the "View glucose levels page", they will see the updated values for notes on the table on the left, the corresponding shifts in the sweat data plot and the prick data values that have been inputted in the graph on the right. 
+
+Notes can be added on the "View Glucose Levels" page - you must be in the appropriate time frame to be able to view the corresponding notes that have been added for that period.
+
+If you would like to view the data stored in MongoDB - to see how varying the parameters changes the graphing data, you can download mongoDB compass and connect to this server:
+mongodb+srv://neoclient:neoclient1@hospitalrecords1.hybox.mongodb.net
+
+
+## General Notes
+If the app is being launched it may take a few seconds to load the baby objects on the select patient page (as Heroku starts up the application servers).
+
+When the "View Glucose Levels" page is first assessed, depending on the data, the timeframe may have to be adjusted. The default data follows a sine wave, where a different calibration/delay values have been given for different days. 
+
+
 ## Deployment
 Since the frontend and backend of the project were developed on separate repositories, they are both continuously integrated and deployed on Heroku. 
 As mentioned above, the frontend url can be found at: https://neo-patient-care.herokuapp.com/ 
 The backend url can be found at: https://neo-monitoring.herokuapp.com/
 
 
+## Running the Application Locally
+Please refer to the Final Report for instructions on this.
 
+The application **must** be run locally if you want to run the unit tests.
