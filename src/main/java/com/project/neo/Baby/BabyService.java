@@ -1,8 +1,5 @@
 package com.project.neo.Baby;
 
-import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3ClientBuilder;
-import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
 import com.project.neo.AmazonS3.S3Service;
 import com.project.neo.BabyRepository.Babyrepository;
