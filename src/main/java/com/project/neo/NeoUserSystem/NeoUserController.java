@@ -9,6 +9,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
 
+/* Reference 1 - taken from https://www.youtube.com/watch?v=VVn9OG9nfH0 */
 @RestController
 @RequestMapping("/user-api")
 @RequiredArgsConstructor
@@ -45,3 +46,4 @@ public class NeoUserController {
         private String roleName;
     }
 }
+/* end of Reference 1 */

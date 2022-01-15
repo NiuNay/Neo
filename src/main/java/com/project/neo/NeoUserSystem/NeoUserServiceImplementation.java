@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+/* Reference 1 - taken from https://www.youtube.com/watch?v=VVn9OG9nfH0 */
 @Service @RequiredArgsConstructor @Transactional @Slf4j // Slf4j - for logging
 public class NeoUserServiceImplementation implements NeoUserService, UserDetailsService {
     private final NeoUserRepository neoUserRepository;
@@ -74,3 +75,4 @@ public class NeoUserServiceImplementation implements NeoUserService, UserDetails
     }
 
 }
+/* end of Reference 1 */

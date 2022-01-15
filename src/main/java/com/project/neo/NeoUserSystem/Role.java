@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+/* Reference 1 - taken from https://www.youtube.com/watch?v=VVn9OG9nfH0 */
 @NoArgsConstructor
 @AllArgsConstructor
 @Document(collection = "Roles")
@@ -20,3 +21,4 @@ public class Role {
     @Getter @Setter
     private String name;
 }
+/* end of Reference 1*/

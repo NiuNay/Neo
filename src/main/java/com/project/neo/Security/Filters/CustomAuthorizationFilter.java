@@ -25,6 +25,7 @@ import java.util.Map;
 import static java.util.Arrays.stream;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
+/* Reference 1 - taken from https://www.youtube.com/watch?v=VVn9OG9nfH0 */
 @Slf4j
 public class CustomAuthorizationFilter extends OncePerRequestFilter {
     @Override
@@ -67,3 +68,4 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
         }
     }
 }
+/* end of Reference 1 */
