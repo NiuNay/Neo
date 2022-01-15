@@ -26,6 +26,13 @@ public class S3Service {
 
     private String secretKey = System.getenv("SECRET_KEY");
 
+//    FOR UNIT TESTING:
+//    @Value("${cloud.aws.credentials.access-key}")
+//    private String accessKeyId;
+//
+//    @Value("${cloud.aws.credentials.secret-key}")
+//    private String secretKey;
+
     @Value("${s3.region}")
     private String region;
 
