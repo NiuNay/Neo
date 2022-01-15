@@ -4,14 +4,16 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.*;
+/*Reference 1: taken from https://www.youtube.com/watch?v=9SGDpanrc8U - AmigosCode SpringBoot Tutorial 2021
+ */
 
 /**
  * This class contains all resources for the API layer. It communicates directly with frontend through the different
  * http requests that are annotated at the top of each method representing RESTful endpoints.
  */
 @CrossOrigin(origins = "https://neo-patient-care.herokuapp.com/")
-@RestController //defines this as the api layer - which communicates directly with client/server
-@RequestMapping//(path="/api") //sets the url where the end points will be returned
+@RestController
+@RequestMapping
 public class BabyController {
     private final BabyService service;
 
