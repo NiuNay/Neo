@@ -23,7 +23,7 @@ As mentioned above, we have not received information from our client pertaining 
 
 Each time the user presses the "View Glucose Levels" function to view the glucose graph data, this sends a GET request that retrieves and plots the data in the .csv file for the appropriate patient. This method assumes nothing of how the data will be transmitted. Once we receive further information about the transmission of data, the app can be edited to create a live grapher that can update at regular time intervals.
 
-In general clinicians check patient vital signs every 4 hours, and assuming that data from the device is sent every 10s, this would mean 1440 data points will be added to the database at the time of each check. Our test csv file contains 3k data points from a sampled sine signal, which demonstrates that it would stil comfortably operate regardless of how data is transmitted from the device.
+In general clinicians check patient vital signs every 4 hours, and assuming that data from the device is sent every 10s, this would mean 1440 data points will be added to the database at the time of each check. Our test csv file contains 3k data points from a sampled sine signal, which demonstrates that it would still comfortably operate regardless of how data is transmitted from the device.
 
 ## Deployment
 Since the frontend and backend of the project were developed on separate repositories, they are both continuously integrated and deployed on Heroku. 
